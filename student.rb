@@ -1,21 +1,21 @@
-require './person.rb'
+require './person'
 
 class Student < Person
   attr_accessor :classroom
 
-  def initialize(age, name = "Unknown", parent_permission = true, classroom)
+  def initialize(age, classroom, name = 'Unknown', parent_permission = true)
     super(age, name, parent_permission)
     @classroom = classroom
   end
 
   def play_hooky
-    "¯\\(ツ)/¯"
+    '¯\\(ツ)/¯'
   end
 end
 
-# student1 = Student.new(10, "Harry Potter", false, "Gryffindor")
-# student2 = Student.new(13, "George Weasley", true, "Gryffindor")
-# student3 = Student.new(18, "Oliver Wood", false, "Gryffindor")
+# student1 = Student.new(10, "Gryffindor", "Harry Potter", false)
+# student2 = Student.new(13, "Gryffindor", "George Weasley", true)
+# student3 = Student.new(18, "Gryffindor", "Oliver Wood", false)
 #
 # puts student1.can_use_services?
 # puts student2.can_use_services?
