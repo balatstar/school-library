@@ -1,9 +1,11 @@
 require './nameable'
 require './trimmer'
 require './capitalize'
+require './book'
+require './rental'
 
 class Person < Nameable
-  attr_accessor :name, :age, :parent_permission
+  attr_accessor :name, :age, :parent_permission, :rentals
   attr_reader :id
 
   def initialize(age, name = 'Unknown', parent_permission: true)
@@ -12,6 +14,7 @@ class Person < Nameable
     @name = name
     @age = age
     @parent_permission = parent_permission
+    @rentals = []
   end
 
   def can_use_services?
