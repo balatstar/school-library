@@ -11,6 +11,6 @@ class Classroom
 
   def add_student(student)
     @students << student
-    student.classroom = self  # Set the classroom also for student
+    student.classroom = self # Set the classroom also for student
   end
 end
