@@ -11,5 +11,4 @@ class Rental
     book.rentals << self # Add to the book rentals array
     person.rentals << self # Add to the person rentals array
   end
-
 end
