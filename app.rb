@@ -46,7 +46,7 @@ class App
 
   def create_student
     puts 'Age:'
-    age = gets.to_i
+    age = gets.chomp.to_i
 
     puts 'Name:'
     name = gets.chomp
@@ -62,7 +62,7 @@ class App
 
   def create_teacher
     puts 'Age:'
-    age = gets.to_i
+    age = gets.chomp.to_i
 
     puts 'Name:'
     name = gets.chomp
@@ -89,45 +89,60 @@ class App
 
   def create_rental
     puts 'Select a book from the following list by number:'
-    @books.each_with_index do |book, index|
-      puts "#{index + 1} - Title: #{book.title}, Author: #{book.author}"
-    end
+    selected_book = select_book
 
-    book_number = gets.to_i
-
-    if book_number < 1 || book_number > @books.length
+    if selected_book.nil?
       puts 'Invalid book selection.'
       return
     end
 
-    selected_book = @books[book_number - 1]
-
     puts 'Select a person from the following list by number:'
+    selected_person = select_person
 
+    if selected_person.nil?
+      puts 'Invalid person selection.'
+      return
+    end
+
+    puts 'Date [use this format: yyyy-mm-dd]:'
+    date = gets.chomp
+
+    create_and_display_rental(date, selected_book, selected_person)
+  end
+
+  def select_book
+    @books.each_with_index do |book, index|
+      puts "#{index + 1} - Title: #{book.title}, Author: #{book.author}"
+    end
+
+    book_number = gets.chomp.to_i
+
+    return nil if book_number < 1 || book_number > @books.length
+
+    @books[book_number - 1]
+  end
+
+  def select_person
     all_people = @students + @teachers
     all_people.each_with_index do |person, index|
       puts "#{index + 1} - Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
     end
 
-    person_number = gets.to_i
+    person_number = gets.chomp.to_i
 
-    if person_number < 1 || person_number > all_people.length
-      puts 'Invalid person selection.'
-      return
-    end
+    return nil if person_number < 1 || person_number > all_people.length
 
-    selected_person = all_people[person_number - 1]
-
-    puts 'Date [use this format: yyyy-mm-dd]:'
-    date = gets.chomp
-
-    rental = Rental.new(date, selected_book, selected_person)
-    puts 'Rental created successfully.'
+    all_people[person_number - 1]
   end
+
+  def create_and_display_rental(date, book, person)
+    Rental.new(date, book, person)
+    puts 'Rental created successfully.'
+  end  
 
   def list_rentals
     puts 'ID of person:'
-    person_id = gets.to_i
+    person_id = gets.chomp.to_i
 
     person = (@students + @teachers).find { |p| p.id == person_id }
 

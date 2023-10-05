@@ -10,26 +10,8 @@ def main(app)
 
   loop do
     display_menu
-    choice = gets.to_i
-
-    case choice
-    when 1
-      app.list_books
-    when 2
-      app.list_people
-    when 3
-      app.create_person
-    when 4
-      app.create_book
-    when 5
-      app.create_rental
-    when 6
-      app.list_rentals
-    when 7
-      exit_app
-    else
-      puts 'Invalid choice. Please enter a valid option.'
-    end
+    choice = gets.chomp.to_i
+    handle_choice(choice, app)
   end
 end
 
@@ -42,6 +24,27 @@ def display_menu
   puts '5 - Create a rental'
   puts '6 - List all rentals for a given person ID'
   puts '7 - Exit'
+end
+
+def handle_choice(choice, app)
+  case choice
+  when 1
+    app.list_books
+  when 2
+    app.list_people
+  when 3
+    app.create_person
+  when 4
+    app.create_book
+  when 5
+    app.create_rental
+  when 6
+    app.list_rentals
+  when 7
+    exit_app
+  else
+    puts 'Invalid choice. Please enter a valid option.'
+  end
 end
 
 def exit_app
