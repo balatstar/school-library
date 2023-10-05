@@ -138,7 +138,7 @@ class App
   def create_and_display_rental(date, book, person)
     Rental.new(date, book, person)
     puts 'Rental created successfully.'
-  end  
+  end
 
   def list_rentals
     puts 'ID of person:'
