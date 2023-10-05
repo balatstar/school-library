@@ -32,7 +32,7 @@ class App
   def create_person
 		puts 'Do you want to create a student (1) or a teacher (2)? Enter the number:'
 		person_type = gets.chomp
-	
+		
 		case person_type
 		when '1'
 			create_student
@@ -46,13 +46,13 @@ class App
 	def create_student
 		puts 'Age:'
 		age = gets.to_i
-	
+		
 		puts 'Name:'
 		name = gets.chomp
-	
+		
 		puts 'Has parent permission? (Y/N):'
 		parent_permission = gets.chomp.downcase == 'y'
-	
+		
 		classroom = @classroom_name
 		student = Student.new(age, classroom, name, parent_permission: parent_permission)
 		@students << student
@@ -62,13 +62,13 @@ class App
 	def create_teacher
 		puts 'Age:'
 		age = gets.to_i
-	
+		
 		puts 'Name:'
 		name = gets.chomp
-	
+		
 		puts 'Specialization:'
 		specialization = gets.chomp
-	
+		
 		teacher = Teacher.new(age, specialization, name)
 		@teachers << teacher
 		puts 'Teacher created successfully.'
@@ -121,7 +121,7 @@ class App
     date = gets.chomp
 
     rental = Rental.new(date, selected_book, selected_person)
-    puts "Rental created successfully."
+    puts 'Rental created successfully.'
   end
 
   def list_rentals
