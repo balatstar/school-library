@@ -42,8 +42,6 @@ def handle_choice(choice, app)
     app.list_rentals
   when 7
     exit_app
-  else
-    puts 'Invalid choice. Please enter a valid option.'
   end
 end
 
