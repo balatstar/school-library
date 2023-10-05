@@ -26,6 +26,7 @@ def display_menu
   puts '7 - Exit'
 end
 
+# rubocop:disable Metrics/CyclomaticComplexity
 def handle_choice(choice, app)
   case choice
   when 1
@@ -42,9 +43,12 @@ def handle_choice(choice, app)
     app.list_rentals
   when 7
     exit_app
+  else
+    puts 'Invalid choice. Please enter a valid option.'
   end
 end
 
+# rubocop:enable Metrics/CyclomaticComplexity
 def exit_app
   puts 'Thank you for using this app!'
   exit
