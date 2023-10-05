@@ -30,49 +30,50 @@ class App
   end
 
   def create_person
-		puts 'Do you want to create a student (1) or a teacher (2)? Enter the number:'
-		person_type = gets.chomp
-		
-		case person_type
-		when '1'
-			create_student
-		when '2'
-			create_teacher
-		else
-			puts 'Invalid person type. Please enter "1" for student or "2" for teacher.'
-		end
-	end
-	
-	def create_student
-		puts 'Age:'
-		age = gets.to_i
-		
-		puts 'Name:'
-		name = gets.chomp
-		
-		puts 'Has parent permission? (Y/N):'
-		parent_permission = gets.chomp.downcase == 'y'
-		
-		classroom = @classroom_name
-		student = Student.new(age, classroom, name, parent_permission: parent_permission)
-		@students << student
-		puts 'Student created successfully.'
-	end
-	
-	def create_teacher
-		puts 'Age:'
-		age = gets.to_i
-		
-		puts 'Name:'
-		name = gets.chomp
-		
-		puts 'Specialization:'
-		specialization = gets.chomp
-		
-		teacher = Teacher.new(age, specialization, name)
-		@teachers << teacher
-		puts 'Teacher created successfully.'
-	end	
+    puts 'Do you want to create a student (1) or a teacher (2)? Enter the number:'
+    person_type = gets.chomp
+
+    case person_type
+
+    when '1'
+      create_student
+    when '2'
+      create_teacher
+    else
+      puts 'Invalid person type. Please enter "1" for student or "2" for teacher.'
+    end
+  end
+
+  def create_student
+    puts 'Age:'
+    age = gets.to_i
+
+    puts 'Name:'
+    name = gets.chomp
+
+    puts 'Has parent permission? (Y/N):'
+    parent_permission = gets.chomp.downcase == 'y'
+
+    classroom = @classroom_name
+    student = Student.new(age, classroom, name, parent_permission: parent_permission)
+    @students << student
+    puts 'Student created successfully.'
+  end
+
+  def create_teacher
+    puts 'Age:'
+    age = gets.to_i
+
+    puts 'Name:'
+    name = gets.chomp
+
+    puts 'Specialization:'
+    specialization = gets.chomp
+
+    teacher = Teacher.new(age, specialization, name)
+    @teachers << teacher
+    puts 'Teacher created successfully.'
+  end
 
   def create_book
     puts 'Title:'
