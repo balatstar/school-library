@@ -1,14 +1,11 @@
 require './app'
 require './classroom'
 require './student'
+require './teacher'
 
-$students = []
-$teachers = []
-$books = []
+app = App.new
 
-@classroom_name = Classroom.new('None')
-
-def main
+def main(app)
   puts 'Welcome to the School Library App!'
 
   loop do
@@ -24,17 +21,17 @@ def main
 
     case choice
     when 1
-      list_books($books)
+      app.list_books
     when 2
-      list_people($students, $teachers)
+      app.list_people
     when 3
-      create_person
+      app.create_person
     when 4
-      create_book
+      app.create_book
     when 5
-      create_rental($books, $students + $teachers)
+      app.create_rental
     when 6
-      list_rentals($students + $teachers)
+      app.list_rentals
     when 7
       puts 'Thank you for using this app!'
       break
@@ -44,4 +41,4 @@ def main
   end
 end
 
-main
+main(app)
