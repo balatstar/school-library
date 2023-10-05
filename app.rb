@@ -25,28 +25,28 @@ end
 # Option 3
 def create_person
 	puts 'Do you want to create a student (1) or a teacher (2)? Enter the number:'
-  person_type = gets.chomp
-
+	person_type = gets.chomp
+	
 	puts 'Age:'
-  age = gets.to_i
-
-  puts 'Name:'
-  name = gets.chomp
-
-  case person_type
+	age = gets.to_i
+	
+	puts 'Name:'
+	name = gets.chomp
+	
+	case person_type
   when '1'
 		puts 'Has parent permission? (Y/N):'
 		parent_permission = gets.chomp.downcase == 'y'
-    classroom = @classroom_name
-    student = Student.new(age, classroom, name, parent_permission: parent_permission)
+		classroom = @classroom_name
+		student = Student.new(age, classroom, name, parent_permission: parent_permission)
 		$students << student
-    puts "Person created successfully: #{student.id}, Name: #{student.name}, Age: #{student.age}"
+		puts 'Person created successfully.'
   when '2'
     puts 'Specialization:'
     specialization = gets.chomp
     teacher = Teacher.new(age, specialization, name)
 		$teachers << teacher
-    puts "Person created successfully: #{teacher.id}, Name: #{teacher.name}, Age: #{teacher.age}, Specialization: #{teacher.specialization}"
+    puts 'Person created successfully.'
   else
     puts 'Invalid person type. Please enter "1" for student or "2" for teacher.'
   end
