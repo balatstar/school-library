@@ -30,33 +30,49 @@ class App
   end
 
   def create_person
-    puts 'Do you want to create a student (1) or a teacher (2)? Enter the number:'
-    person_type = gets.chomp
-    
-    puts 'Age:'
-    age = gets.to_i
-    
-    puts 'Name:'
-    name = gets.chomp
-    
-    case person_type
-    when '1'
-      puts 'Has parent permission? (Y/N):'
-      parent_permission = gets.chomp.downcase == 'y'
-      classroom = @classroom_name
-      student = Student.new(age, classroom, name, parent_permission: parent_permission)
-      @students << student
-      puts 'Person created successfully.'
-    when '2'
-      puts 'Specialization:'
-      specialization = gets.chomp
-      teacher = Teacher.new(age, specialization, name)
-      @teachers << teacher
-      puts 'Person created successfully.'
-    else
-      puts 'Invalid person type. Please enter "1" for student or "2" for teacher.'
-    end
-  end
+		puts 'Do you want to create a student (1) or a teacher (2)? Enter the number:'
+		person_type = gets.chomp
+	
+		case person_type
+		when '1'
+			create_student
+		when '2'
+			create_teacher
+		else
+			puts 'Invalid person type. Please enter "1" for student or "2" for teacher.'
+		end
+	end
+	
+	def create_student
+		puts 'Age:'
+		age = gets.to_i
+	
+		puts 'Name:'
+		name = gets.chomp
+	
+		puts 'Has parent permission? (Y/N):'
+		parent_permission = gets.chomp.downcase == 'y'
+	
+		classroom = @classroom_name
+		student = Student.new(age, classroom, name, parent_permission: parent_permission)
+		@students << student
+		puts 'Student created successfully.'
+	end
+	
+	def create_teacher
+		puts 'Age:'
+		age = gets.to_i
+	
+		puts 'Name:'
+		name = gets.chomp
+	
+		puts 'Specialization:'
+		specialization = gets.chomp
+	
+		teacher = Teacher.new(age, specialization, name)
+		@teachers << teacher
+		puts 'Teacher created successfully.'
+	end	
 
   def create_book
     puts 'Title:'
@@ -105,7 +121,7 @@ class App
     date = gets.chomp
 
     rental = Rental.new(date, selected_book, selected_person)
-    puts "Rental created successfully: Date: #{rental.date}, Book: #{rental.book.title}, Rented by: #{rental.person.name}"
+    puts "Rental created successfully."
   end
 
   def list_rentals
