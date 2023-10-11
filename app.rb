@@ -1,3 +1,4 @@
+require 'json'
 require './student'
 require './teacher'
 require './classroom'
@@ -8,6 +9,8 @@ class App
     @teachers = []
     @books = []
     @classroom_name = Classroom.new('None')
+    load_students
+    load_teachers
   end
 
   def list_books
@@ -58,6 +61,7 @@ class App
     student = Student.new(age, classroom, name, parent_permission: parent_permission)
     @students << student
     puts 'Student created successfully.'
+    save_students
   end
 
   def create_teacher
@@ -73,6 +77,23 @@ class App
     teacher = Teacher.new(age, specialization, name)
     @teachers << teacher
     puts 'Teacher created successfully.'
+    save_teachers
+  end
+
+  def save_students
+    File.open('students.json', 'w') do |file|
+      @students.each do |student|
+        file.puts(student.to_json)
+      end
+    end
+  end
+
+  def save_teachers
+    File.open('teachers.json', 'w') do |file|
+      @teachers.each do |teacher|
+        file.puts(teacher.to_json)
+      end
+    end
   end
 
   def create_book
@@ -154,5 +175,45 @@ class App
         puts "Date: #{rental.date}, Book '#{rental.book.title}' by #{rental.book.author}"
       end
     end
+  end
+
+  def load_students
+    if File.exist?('students.json')
+      File.open('students.json', 'r') do |file|
+        file.each do |line|
+          student_data = JSON.parse(line)
+          student = Student.new(
+            student_data['age'],
+            @classroom_name,
+            student_data['name'],
+            parent_permission: student_data['parent_permission']
+          )
+          @students << student
+        end
+      end
+    end
+  end
+
+  def load_teachers
+    if File.exist?('teachers.json')
+      File.open('teachers.json', 'r') do |file|
+        file.each do |line|
+          teacher_data = JSON.parse(line)
+          teacher = Teacher.new(
+            teacher_data['age'],
+            teacher_data['specialization'],
+            teacher_data['name']
+          )
+          @teachers << teacher
+        end
+      end
+    end
+  end
+
+  def exit_app
+    save_students
+    save_teachers
+    puts 'Thank you for using this app!'
+    exit
   end
 end

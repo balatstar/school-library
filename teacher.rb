@@ -11,4 +11,12 @@ class Teacher < Person
   def can_use_services?
     true
   end
+
+  def to_json
+    {
+      age: age,
+      name: name,
+      specialization: specialization
+    }.to_json
+  end
 end
