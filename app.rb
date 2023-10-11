@@ -11,6 +11,7 @@ class App
     @classroom_name = Classroom.new('None')
     load_students
     load_teachers
+    load_books
   end
 
   def list_books
@@ -78,22 +79,6 @@ class App
     @teachers << teacher
     puts 'Teacher created successfully.'
     save_teachers
-  end
-
-  def save_students
-    File.open('students.json', 'w') do |file|
-      @students.each do |student|
-        file.puts(student.to_json)
-      end
-    end
-  end
-
-  def save_teachers
-    File.open('teachers.json', 'w') do |file|
-      @teachers.each do |teacher|
-        file.puts(teacher.to_json)
-      end
-    end
   end
 
   def create_book
@@ -177,6 +162,45 @@ class App
     end
   end
 
+  def save_books
+    File.open('books.json', 'w') do |file|
+      @books.each do |book|
+        file.puts(book.to_json)
+      end
+    end
+  end
+
+  def save_students
+    File.open('students.json', 'w') do |file|
+      @students.each do |student|
+        file.puts(student.to_json)
+      end
+    end
+  end
+
+  def save_teachers
+    File.open('teachers.json', 'w') do |file|
+      @teachers.each do |teacher|
+        file.puts(teacher.to_json)
+      end
+    end
+  end
+
+  def load_books
+    if File.exist?('books.json')
+      File.open('books.json', 'r') do |file|
+        file.each do |line|
+          book_data = JSON.parse(line)
+          book = Book.new(
+            book_data['title'],
+            book_data['author']
+          )
+          @books << book
+        end
+      end
+    end
+  end
+
   def load_students
     if File.exist?('students.json')
       File.open('students.json', 'r') do |file|
@@ -213,6 +237,7 @@ class App
   def exit_app
     save_students
     save_teachers
+    save_books
     puts 'Thank you for using this app!'
     exit
   end

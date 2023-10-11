@@ -9,4 +9,10 @@ class Book
     @author = author
     @rentals = []
   end
+  def to_json
+    {
+      title: title,
+      author: author
+    }.to_json
+  end
 end
