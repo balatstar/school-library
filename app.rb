@@ -262,10 +262,10 @@ class App
           rental_data = JSON.parse(line)
   
           # Find the person (student or teacher) by ID
-          person = (@students + @teachers).find { |p| p.id == rental_data['person_id'] }
+          person = (@students + @teachers).find { |p| p.id == rental_data['person'] }
   
           # Find the book by title
-          book = @books.find { |b| b.title == rental_data['book_title'] }
+          book = @books.find { |b| b.title == rental_data['book'] }
   
           # If both the person and book are found, create and add the rental
           if person && book
