@@ -16,6 +16,7 @@ class Student < Person
 
   def to_json
     {
+      id: id,
       age: age,
       name: name,
       parent_permission: parent_permission,

@@ -12,6 +12,7 @@ class App
     load_students
     load_teachers
     load_books
+    load_rentals
   end
 
   def list_books
@@ -91,6 +92,7 @@ class App
     book = Book.new(title, author)
     @books << book
     puts "Book created successfully: Title: #{book.title}, Author: #{book.author}"
+    save_books
   end
 
   def create_rental
@@ -144,6 +146,7 @@ class App
   def create_and_display_rental(date, book, person)
     Rental.new(date, book, person)
     puts 'Rental created successfully.'
+    save_rentals
   end
 
   def list_rentals
@@ -186,6 +189,22 @@ class App
     end
   end
 
+  def save_rentals
+    File.open('rentals.json', 'w') do |file|
+      @students.each do |student|
+        student.rentals.each do |rental|
+          file.puts(rental.to_json)
+        end
+      end
+  
+      @teachers.each do |teacher|
+        teacher.rentals.each do |rental|
+          file.puts(rental.to_json)
+        end
+      end
+    end
+  end
+
   def load_books
     if File.exist?('books.json')
       File.open('books.json', 'r') do |file|
@@ -212,6 +231,7 @@ class App
             student_data['name'],
             parent_permission: student_data['parent_permission']
           )
+          student.id = student_data['id']
           @students << student
         end
       end
@@ -228,7 +248,30 @@ class App
             teacher_data['specialization'],
             teacher_data['name']
           )
+          teacher.id = teacher_data['id']
           @teachers << teacher
+        end
+      end
+    end
+  end
+
+  def load_rentals
+    if File.exist?('rentals.json')
+      File.open('rentals.json', 'r') do |file|
+        file.each do |line|
+          rental_data = JSON.parse(line)
+  
+          # Find the person (student or teacher) by ID
+          person = (@students + @teachers).find { |p| p.id == rental_data['person_id'] }
+  
+          # Find the book by title
+          book = @books.find { |b| b.title == rental_data['book_title'] }
+  
+          # If both the person and book are found, create and add the rental
+          if person && book
+            rental = Rental.new(rental_data['date'], book, person)
+            person.rentals << rental
+          end
         end
       end
     end
@@ -238,6 +281,7 @@ class App
     save_students
     save_teachers
     save_books
+    save_rentals
     puts 'Thank you for using this app!'
     exit
   end

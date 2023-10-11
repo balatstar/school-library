@@ -14,6 +14,7 @@ class Teacher < Person
 
   def to_json
     {
+      id: id,
       age: age,
       name: name,
       specialization: specialization
